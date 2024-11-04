@@ -1,5 +1,6 @@
 <script>
 import { onMount } from 'svelte';
+
 let username = '';
 let password = '';
 let message = '';
@@ -69,13 +70,6 @@ async function logout() {
     <button type="submit">Register</button>
 </form>
 
-<form on:submit|preventDefault={login}>
-    <h2>Login</h2>
-    <input type="text" bind:value={username} placeholder="Username" required />
-    <input type="password" bind:value={password} placeholder="Password" required />
-    <button type="submit">Login</button>
-</form>
-
 <button on:click={logout}>Logout</button>
 
 {#if message}
@@ -88,9 +82,50 @@ main {
     padding: 1em;
     max-width: 400px;
     margin: auto;
+    display: flex; /* Use flexbox */
+    flex-direction: column; /* Stack items vertically */
+    align-items: center; /* Center items horizontally */
+    text-align: center; /* Center text */
 }
-input {
+.inputs {
+    display: flex;
+    flex-direction: column;
+  }
+
+  input {
     display: block;
     margin: 0.5em 0;
-}
+    padding: 0.5em;
+    border: 1px solid #444; /* Dark border */
+    border-radius: 4px;
+    background-color: #1e1e1e; /* Dark input background */
+    color: #ffffff; /* Light text color */
+    font-size: 1em;
+    max-width: 300px;
+  }
+
+  input::placeholder {
+    color: #888; /* Placeholder color */
+  }
+
+  button {
+    padding: 0.5em;
+    border: none;
+    border-radius: 4px;
+    background-color: #6200ea; /* Button background color */
+    color: #ffffff; /* Button text color */
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  button:hover {
+    background-color: #3700b3; /* Darker shade on hover */
+  }
+
+  p {
+    text-align: center;
+    margin-top: 1em;
+    
 </style>
+    
