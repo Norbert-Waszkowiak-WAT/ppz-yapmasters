@@ -1,0 +1,9 @@
+:global(html) {
+    color: #dddddd;
+    background-color: #303030;
+}
+:global(a) {
+    color: #e7e7d1; /* Link color */
+    text-decoration: none; /* Remove underline from link */
+    font-weight: bold; /* Bold text for the link */
+}

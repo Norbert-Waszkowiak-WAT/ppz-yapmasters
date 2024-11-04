@@ -1,12 +1,3 @@
-<script>
-    // You can add any necessary script here
-</script>
-
-<div class="container">
-    
-    <slot />
-</div>
-
 <style>
     .container {
         display: flex; /* Use flexbox for layout */
@@ -17,3 +8,8 @@
         font-family: "Outfit", sans-serif;
     }
 </style>
+
+<div class="container">
+    
+    <slot />
+</div>

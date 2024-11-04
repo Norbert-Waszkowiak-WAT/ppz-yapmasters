@@ -45,7 +45,7 @@ async function logout() {
 
 <main>
 <h1>Register page</h1>
-<form on:submit|preventDefault={register}>
+<form on:submit|preventDefault={register} class="inputs">
     <h2>Register</h2>
     <input type="text" bind:value={username} placeholder="Username" required />
     <input type="password" bind:value={password} placeholder="Password" required />

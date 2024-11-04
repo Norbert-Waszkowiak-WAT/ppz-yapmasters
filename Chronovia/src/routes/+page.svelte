@@ -1,6 +1,17 @@
-<script lang="ts">
-
-</script>
+<style>
+  :global(html) {
+    color: #dddddd;
+    background-color: #303030;
+  }
+  :global(a) {
+    color: #e7e7d1; /* Link color */
+    text-decoration: none; /* Remove underline from link */
+    font-weight: bold; /* Bold text for the link */
+  }
+  .module-main-link {
+    font-size: 22px;
+  }
+</style>
 
 <div class="container">
   <!--  This is the place for windows container, it would make rounded app edges, load
@@ -22,17 +33,3 @@
   </div>
 </div>
 
-<style>
-    .module-main-link {
-      font-size: 22px;
-    }
-    :global(html) {
-        color: #dddddd;
-        background-color: #303030;
-    }
-    :global(a) {
-        color: #e7e7d1; /* Link color */
-        text-decoration: none; /* Remove underline from link */
-        font-weight: bold; /* Bold text for the link */
-    }
-</style>
