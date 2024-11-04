@@ -30,7 +30,7 @@
   <h1>Login Page</h1>
   <form on:submit|preventDefault={login}>
     <div class="inputs">
-      <input type="text" bind:value={username} placeholder="Username" required />
+      <input type="text" bind:value={username} placeholder="E-Mail" required />
       <input type="password" bind:value={password} placeholder="Password" required />
       <button type="submit">Login</button>
     </div>
