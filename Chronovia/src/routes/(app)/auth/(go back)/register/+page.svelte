@@ -26,24 +26,6 @@ async function register() {
     }
 }
 
-async function login() {
-    const response = await fetch(`${apiUrl}/login`, {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ username, password }),
-    });
-
-    const data = await response.json();
-    if (response.ok) {
-    message = `Login successful! Welcome back, ${data.user.username}`;
-    token = data.token; // Store the token for future requests
-    } else {
-    message = data.message || 'Login failed';
-    }
-}
-
 async function logout() {
     const response = await fetch(`${apiUrl}/logout`, {
     method: 'GET',
