@@ -1,27 +1,26 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotAcceptableException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { userSchema } from './users.schema';
 import { EmailService } from 'src/email/email.service';
 import * as bcrypt from 'bcrypt';
 import * as crypto from 'crypto';
-import { throwException } from 'src/responseStatus/auth.response';
 @Injectable()
 export class UsersService {
-  constructor(
-    @InjectModel('user') private readonly userModel: Model<userSchema>,
-    private readonly EmailService: EmailService,
-  ) {}
+  constructor(@InjectModel('user') private readonly userModel: Model<userSchema>, 
+  private readonly EmailService: EmailService
+) {}
 
-  async deleteUser(user: userSchema) {
-    const email = user.email;
-    await this.userModel.findOneAndDelete({ email });
-  }
-  async insertUser(username: string, password: string, email: string) {
+async deleteUser(user: userSchema) { 
+const email=user.email;
+  await this.userModel.findOneAndDelete({ email});
+}
+  async insertUser(username: string, password: string,email: string) {
+    
     const newUser = new this.userModel({
       username,
       password,
-      email,
+      email
     });
     await newUser.save();
     await this.EmailService.sendVerificationCode(email);
@@ -35,26 +34,25 @@ export class UsersService {
     const user = await this.userModel.findOne({ [key]: value });
     return !!user;
   }
-  async verifyUserEmail(
-    email: string,
-    code: string,
-    password: string,
-  ): Promise<boolean> {
+  async verifyUserEmail(email: string, code: string, password: string): Promise<boolean> {
     const user = await this.getUser(email);
-    const passwordValid = await bcrypt.compare(password, user.password);
+    const passwordValid = await bcrypt.compare(password, user.password)
     const isCodeValid = await this.EmailService.verifyCode(email, code);
     if (!user) {
-      throwException.Usernotfound();
+      throw new NotAcceptableException('could not find the user');
+      
     }
-    if (user && passwordValid && isCodeValid) {
-      return true;
-    }
-
-    if (user && passwordValid && !isCodeValid) {
-      // throw new Error('Invalid or expired verification code');
-    }
+  if (user && passwordValid && isCodeValid) {
+   
+    return true;
   }
-
+  
+   if(user && passwordValid&& !isCodeValid) {
+     // throw new Error('Invalid or expired verification code');
+    };
+  
+  }
+  
   async generatePasswordResetToken(email: string): Promise<string | null> {
     const user = await this.userModel.findOne({ email });
     if (!user) return null;

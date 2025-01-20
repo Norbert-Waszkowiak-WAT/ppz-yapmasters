@@ -9,16 +9,15 @@ import { ConfigModule } from '@nestjs/config';
 import { CalendarModule } from './calender/calendar.module';
 
 @Module({
-  imports: [
-    MongooseModule.forRoot('mongodb://localhost/nest'),
+  imports: [MongooseModule.forRoot('mongodb://localhost/nest'),
     ConfigModule.forRoot({
-      isGlobal: true,
+      isGlobal: true, 
     }),
-    UsersModule,
-    AuthModule,
-    EmailModule,
-    CalendarModule,
-  ],
+     UsersModule,
+     AuthModule,
+     EmailModule,
+     CalendarModule,
+    ],
   controllers: [AppController],
   providers: [AppService],
 })
