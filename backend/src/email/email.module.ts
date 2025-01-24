@@ -1,11 +1,10 @@
 import { Module } from '@nestjs/common';
 import { EmailService } from './email.service';
 import { MongooseModule } from '@nestjs/mongoose';
-import { userModel, userSchema } from 'src/users/users.schema';
+import { userModel } from 'src/users/users.schema';
 import { EmailController } from './email.controller';
 @Module({
-  imports: [MongooseModule.forFeature([{ name: "user", schema: userModel }]),
-],
+  imports: [MongooseModule.forFeature([{ name: 'user', schema: userModel }])],
   controllers: [EmailController],
   providers: [EmailService],
   exports: [EmailService],

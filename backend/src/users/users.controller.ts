@@ -6,17 +6,22 @@ import {
   UseGuards,
   Request,
   Param,
+  Delete,
 } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { LocalAuthGuard } from 'src/auth/local.auth.guard';
 import { UsersService } from './users.service';
 import { EmailService } from 'src/email/email.service';
 import { throwException } from 'src/responseStatus/auth.response';
+import { throwSessionException } from 'src/responseStatus/sessions.response';
+import { SessionsService } from 'src/sessions/sessions.service';
+import { AuthenticatedGuard } from 'src/auth/authenticated.guard';
 @Controller('users')
 export class UsersController {
   constructor(
     private readonly usersService: UsersService,
     private readonly EmailService: EmailService,
+    private readonly sessionService: SessionsService,
   ) {}
   //signup
   @Post('/register')
@@ -48,11 +53,19 @@ export class UsersController {
   @Post('/login')
   async login(@Request() req, @Body('email') email: string): Promise<any> {
     const user = await this.usersService.getUser(email);
-    return {
+    const userId = req.session.passport.user; // Passport sets this after login
+    const sessionId = req.session.id; // Get the session ID from Express session
+
+    if (userId && sessionId) {
+      await this.sessionService.saveSession(userId, sessionId); // Save session to Redis
+    }
+
+    const data = {
       User: user.username,
-      message: 'User logged in',
       email: user.email,
+      sessionId: sessionId,
     };
+    throwException.UserloggedIn(data);
   }
   @Get('/logout')
   logout(@Request() req): any {
@@ -122,5 +135,19 @@ export class UsersController {
     }
 
     throwException.PasswordResetSuccessfully();
+  }
+  @UseGuards(AuthenticatedGuard)
+  @Delete('destroyallsessions')
+  async destroyAllSessions(@Request() req) {
+    await this.sessionService.deleteAllSessions(req.session.passport.user);
+    throwSessionException.AllSessionsDestroyedSuccessfully();
+  }
+  @UseGuards(AuthenticatedGuard)
+  @Get('getallsessions')
+  async getAllSessions(@Request() req) {
+    const sessions = await this.sessionService.getSessions(
+      req.session.passport.user,
+    );
+    throwSessionException.AllSessionsFetchedSuccessfully(sessions);
   }
 }
