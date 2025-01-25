@@ -4,12 +4,6 @@
 - User login
 - User logout
 
-## Tech Stack
-
-(TBD - Insert your tech stack here)
-
-## API Endpoints
-The program does not check if emails are valid!!!
 ### Register Endpoint
 
 - **URL:** `/users/register`
@@ -33,12 +27,10 @@ The program does not check if emails are valid!!!
 ```
 
 Example Responses:
-
-Default -> Verification
 ```json
 {
-	"message": "Now please verify your email",
-	"userId": "672797f0c2acec05a02dc4ab",
+  "statusCode": 202,
+	"responseCode": 615,
 	"userName": "negro",
 	"userEmail": "alexanderdawi1@hotmail.com"
 }
@@ -46,17 +38,17 @@ Default -> Verification
 will return this json if the email is already in use
 ```json
 {
-	"message": "Email already used",
-	"error": "Unauthorized",
-	"statusCode": 401
+{
+	"statusCode": 409,
+	"responseCode": 608
+}
 }
 ```
 if username is already in use
 ```json
 {
-  "message": "Username already used",
-  "error": "Unauthorized",
-  "statusCode": 401
+	"statusCode": 409,
+	"responseCode": 607
 }
 ```
 
@@ -82,35 +74,32 @@ Example Response:
 
 ``` json
 {
-	"User": {
-		"userId": "672797f0c2acec05a02dc4ab",
-		"userName": "negro"
-	},
-	"message": "User logged in"
+	"statusCode": 200,
+	"responseCode": 609,
+	"User": "negro",
+  "email": "johnDoe@negro300.com",
+	"sessionId": "pqfb9Fg8tiNfbI7VNrX5zFhTE0XtWaJd"
 }
 ```
 will return this json if the email is not verfied
 ``` json
 {
-	"message": "Please verify your email address",
-	"error": "Unauthorized",
-	"statusCode": 401
+	"statusCode": 422,
+	"responseCode": 601
 }
 ```
 and this json if email is not found
 ``` json
 {
-	"message": "email incorrect",
-	"error": "Unauthorized",
-	"statusCode": 401
+	"statusCode": 401,
+	"responseCode": 602
 }
 ```
 and this json if password incorrect
 ``` json
 {
-	"message": "Password Incorrect",
-	"error": "Unauthorized",
-	"statusCode": 401
+	"statusCode": 401,
+	"responseCode": 603
 }
 ```
 ## verify-sentcode Endpoint
@@ -135,7 +124,28 @@ Example Request:
 response
 ``` json 
 {
-  "message": "Email verified successfully"
+	"statusCode": 200,
+	"responseCode": 605
+}
+invalid code:
+```json
+{
+	"statusCode": 401,
+	"responseCode": 604
+}
+```
+Wrong password:
+```json
+{
+	"statusCode": 401,
+	"responseCode": 603
+}
+```
+Wrong email:
+```json
+{
+	"statusCode": 404,
+	"responseCode": 610
 }
 ```
 ## resend-verification-code Endpoint
@@ -154,7 +164,8 @@ Example Request:
 response
 ``` json 
 {
-  "message": "Verification code sent successfully"
+	"statusCode": 200,
+	"responseCode": 616
 }
 ```
 
@@ -177,13 +188,15 @@ Example Request:
 response
 ``` json
 {
-  "message": "Password reset email sent"
+	"statusCode": 200,
+	"responseCode": 612
 }
 ``` 
 or if incorrect email
 ``` json 
 {
-  "message": "Email not found"
+	"statusCode": 401,
+	"responseCode": 602
 }
 ``` 
 ## reset-password/:token Endpoint
@@ -206,19 +219,21 @@ Example Request:
 response
 ``` json 
 {
-  "message": "Password reset successful"
+	"statusCode": 200,
+	"responseCode": 614
 }
 ``` 
 if token invalid or expired
 ``` json 
 {
-  "message": "Invalid or expired token"
+	"statusCode": 401,
+	"responseCode": 613
 }
 ```
 ## delete-user Endpiont
 
     URL: /users/delete-user
-    Method: post
+    Method: delete
     Request Body: email,password (required)
     Response:
         message: string (contains the success message)
@@ -235,20 +250,35 @@ Example Request:
 response
 ``` json   
 {
-  "message": "User deleted successfully"
+	"statusCode": 200,
+	"responseCode": 617
 }
 ``` 
 if password is incorrect
 ``` json 
 {
-  "message": "Invalid password"
+	"statusCode": 401,
+	"responseCode": 603
 }
 ``` 
+if email is incorrect:
+```json
+{
+	"statusCode": 404,
+	"responseCode": 610
+}
+```
  ## Logout Endpoint
 
     URL: /logout
     Method: GET
     Request Body: empty
 
-
+response:
+```json
+{
+	"statusCode": 200,
+	"responseCode": 611
+}
+```
    

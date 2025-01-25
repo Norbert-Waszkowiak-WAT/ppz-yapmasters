@@ -8,10 +8,10 @@
 * meaning : "Incorrect password"
 
 ## Code 604
-* meaning : "Invalid Verification Token"
+* meaning : "Invalid Verification Code"
 
 ## Code 605
-* meaning   : ""
+* meaning   : "Email Verified Successfully"
 
 ## Code 606
 * meaning   : "Verification code sent"
