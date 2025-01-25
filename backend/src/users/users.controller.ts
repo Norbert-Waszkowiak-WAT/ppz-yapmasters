@@ -107,7 +107,7 @@ export class UsersController {
     throwException.PasswordResetEmailSentSuccessfully();
   }
 
-  @Post('delete-user')
+  @Delete('delete-user')
   async deleteUser(
     @Body('email') email: string,
     @Body('password') password: string,

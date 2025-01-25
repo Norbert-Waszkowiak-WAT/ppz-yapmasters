@@ -41,7 +41,13 @@ export class UsersService {
     password: string,
   ): Promise<boolean> {
     const user = await this.getUser(email);
+    if (!user) {
+      throwException.Usernotfound();
+    }
     const passwordValid = await bcrypt.compare(password, user.password);
+    if (!passwordValid) {
+      throwException.IncorrectPassword();
+    }
     const isCodeValid = await this.EmailService.verifyCode(email, code);
     if (!user) {
       throwException.Usernotfound();
