@@ -1,3 +1,6 @@
+# Temporary list of packages
+package-lock.json
+
 # compiled output
 /dist
 /node_modules
