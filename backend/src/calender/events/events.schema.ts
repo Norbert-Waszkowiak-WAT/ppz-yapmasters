@@ -12,22 +12,34 @@ export class Event {
   description?: string;
 
   @Prop({ required: true })
-  startDate: Date;
-
-  @Prop({ required: true })
-  endDate: Date;
-
-  @Prop({ required: true })
   userId: string; // Reference to the user
 
   @Prop()
-  recurring?: string; // Store RRule as a string
+  RRule?: string; // Store RRule as a string
+
+  @Prop({ required: true })
+  isOneTimeEvent: boolean;
 
   @Prop({ required: false })
-  occurrenceDate: string;
+  occurrenceDate?: string;
 
   @Prop({ required: false })
-  duration?: number; // Duration of the event in minutes
+  duration: number; // Duration of the event in minutes
+
+  @Prop()
+  location?: string;
+
+  @Prop()
+  participants?: [string];
+
+  @Prop({ default: '#007bff' })
+  colour: string;
+
+  @Prop({ required: true })
+  timeZone: string;
+
+  @Prop({ required: true })
+  startTime: string;
 }
 
 export const EventSchema = SchemaFactory.createForClass(Event);
