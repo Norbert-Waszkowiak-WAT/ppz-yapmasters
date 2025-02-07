@@ -2,7 +2,7 @@ import {
   BadRequestException,
   Body,
   Controller,
-  Get,
+  // Get,
   NotFoundException,
   Param,
   Patch,
@@ -49,6 +49,7 @@ export class EventsController {
       throw error;
     }
   }
+  /*
   @Get('/getEvents')
   @UseGuards(AuthenticatedGuard)
   async getAllOccurrences(
@@ -68,7 +69,7 @@ export class EventsController {
     return occurrences;
   }
 
-  @Get('/delete/:eventId')
+   @Get('/delete/:eventId')
   @UseGuards(AuthenticatedGuard)
   async deleteEvent(@Param('eventId') eventId: string) {
     if (!eventId || !Types.ObjectId.isValid(eventId)) {
@@ -83,4 +84,5 @@ export class EventsController {
       throw error;
     }
   }
+    */
 }

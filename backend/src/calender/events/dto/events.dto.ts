@@ -22,10 +22,6 @@ export class CreateEventDto {
   @IsString()
   description?: string;
 
-  @IsNotEmpty()
-  @IsString()
-  userId: string;
-
   @ValidateIf((o) => !o.isOneTimeEvent)
   @IsNotEmpty()
   @IsString()

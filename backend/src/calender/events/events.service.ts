@@ -4,7 +4,7 @@ import { CreateEventDto } from './dto/events.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { UpdateEventDto } from './dto/update.event.dto';
-import { rrulestr } from 'rrule';
+//import { rrulestr } from 'rrule';
 
 @Injectable()
 export class EventsService {
@@ -33,7 +33,7 @@ export class EventsService {
     return result;
   }
 
-  async getAllEventOccurrences(startDate: Date, endDate: Date, userId: any) {
+  /* async getAllEventOccurrences(startDate: Date, endDate: Date, userId: any) {
     const events = await this.eventModel.find({ userId }); // Retrieve all events
 
     const allOccurrences = [];
@@ -87,4 +87,5 @@ export class EventsService {
     await this.eventModel.findOneAndDelete({ _id: eventId });
     return { message: 'Event deleted successfully' };
   }
+   */
 }

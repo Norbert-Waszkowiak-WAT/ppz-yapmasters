@@ -7,6 +7,12 @@ class ThrowEventExceptionClass {
   InvalidEventId() {
     throw createCustomException(802, 400);
   }
+  EventNotFound() {
+    throw createCustomException(803, 404);
+  }
+  EventCreatedSuccessfully() {
+    throw createCustomException(804, 201);
+  }
 }
 
 export const throwEventsException = new ThrowEventExceptionClass();
