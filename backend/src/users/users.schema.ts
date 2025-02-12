@@ -1,9 +1,9 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Types } from 'mongoose';
 
-export type userDocument = HydratedDocument<userSchema>;
+export type userDocument = HydratedDocument<user>;
 @Schema()
-export class userSchema {
+export class user {
   @Prop({ type: Types.ObjectId, default: () => new Types.ObjectId() })
   _id: Types.ObjectId;
 
@@ -35,6 +35,6 @@ export class userSchema {
   resetPasswordExpires?: Date;
 }
 
-export const userModel = SchemaFactory.createForClass(userSchema);
+export const userModel = SchemaFactory.createForClass(user);
 
 userModel.index({ email: 1, username: 1 }, { unique: true });
