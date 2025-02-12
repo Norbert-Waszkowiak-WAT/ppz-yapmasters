@@ -1,4 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Date } from 'mongoose';
 
 @Schema()
 export class Event {
@@ -20,8 +21,8 @@ export class Event {
   @Prop({ required: true })
   isOneTimeEvent: boolean;
 
-  @Prop({ required: false })
-  occurrenceDate?: string;
+  @Prop({ required: false, type: Date })
+  occurrenceDate?: Date | null;
 
   @Prop({ required: false })
   duration: number; // Duration of the event in minutes
@@ -40,8 +41,14 @@ export class Event {
 
   @Prop({ required: true })
   startTime: string;
+
+  @Prop({ default: Date.now, type: Date })
+  createdAt: Date;
+
+  @Prop({ default: Date.now, type: Date })
+  updatedAt: Date;
 }
 
 export const EventSchema = SchemaFactory.createForClass(Event);
 
-EventSchema.index({ userId: 1, startDate: 1 });
+EventSchema.index({ userId: 1, occurrenceDate: 1 });

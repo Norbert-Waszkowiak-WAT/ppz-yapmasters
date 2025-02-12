@@ -22,7 +22,7 @@ export class CreateEventDto {
   @IsString()
   description?: string;
 
-  @ValidateIf((o) => !o.isOneTimeEvent)
+  @ValidateIf((o) => o.isOneTimeEvent)
   @IsNotEmpty()
   @IsString()
   RRule?: string;
