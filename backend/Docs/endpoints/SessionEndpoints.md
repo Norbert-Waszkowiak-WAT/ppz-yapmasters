@@ -1,6 +1,6 @@
 ## Get all Sessions Endpoint
    User must be logged in to use this endpoint
-    URL: user/getallsessions
+    URL: sesssions/getallsessions
     Method: get
     Request Body: none
     Response:

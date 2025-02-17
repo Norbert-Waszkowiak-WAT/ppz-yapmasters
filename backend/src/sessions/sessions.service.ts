@@ -1,12 +1,15 @@
 import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
 import Redis from 'ioredis';
+import { Model, Types } from 'mongoose';
+import { user } from 'src/users/users.schema';
 
 @Injectable()
 export class SessionsService {
   private readonly redis: Redis;
 
-  constructor() {
-    this.redis = new Redis(); // Defaults to localhost:6379
+  constructor(@InjectModel(user.name) private userModel: Model<user>) {
+    this.redis = new Redis();
   }
 
   async saveSession(
@@ -54,5 +57,26 @@ export class SessionsService {
   async deleteAllSessions(userId: string): Promise<void> {
     const key = `user:${userId}`;
     await this.redis.del(key); // Delete the user's session set
+  }
+
+  async checkIfSessionIsActive(sessionID: string) {
+    const sessionKey = `sess:${sessionID}`;
+    const sessionExists = await this.redis.get(sessionKey);
+    return sessionExists;
+  }
+  async getUserInfo(user: string) {
+    const userInfo = await this.getUser(user);
+    const responseData = {
+      username: userInfo.username,
+      email: userInfo.email,
+    };
+    return responseData;
+  }
+
+  async getUser(userId: string): Promise<user> {
+    const user = await this.userModel
+      .findById(new Types.ObjectId(userId))
+      .exec();
+    return user;
   }
 }
