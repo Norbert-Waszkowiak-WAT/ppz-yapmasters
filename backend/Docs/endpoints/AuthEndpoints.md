@@ -31,8 +31,8 @@ Example Responses:
 {
   "statusCode": 202,
 	"responseCode": 615,
-	"userName": "negro",
-	"userEmail": "alexanderdawi1@hotmail.com"
+	"username": "negro",
+	"email": "alexanderdawi1@hotmail.com"
 }
 ```
 will return this json if the email is already in use
@@ -148,7 +148,7 @@ Wrong email:
 	"responseCode": 610
 }
 ```
-## resend-verification-code Endpoint
+## send-verification-code Endpoint
 - URL: /users/resend-verification-code  
 - Method: POST  
 - Request Body: email

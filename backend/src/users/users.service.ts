@@ -24,7 +24,6 @@ export class UsersService {
       email,
     });
     await newUser.save();
-    await this.EmailService.sendVerificationCode(email);
     return newUser;
   }
   async getUser(email: string) {

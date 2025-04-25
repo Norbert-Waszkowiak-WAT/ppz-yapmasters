@@ -89,8 +89,8 @@ export class UsersController {
       throwException.InvalidVerificationCode();
     }
   }
-  @Post('resend-verification-code')
-  async resendVerificationCode(@Body('email') email: string) {
+  @Post('send-verification-code')
+  async sendVerificationCode(@Body('email') email: string) {
     await this.EmailService.sendVerificationCode(email);
     throwException.VerificationCodeSentSuccessfully();
   }
