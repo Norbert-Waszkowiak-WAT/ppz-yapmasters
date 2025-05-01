@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { userSchema } from './users.schema';
+import { user } from './users.schema';
 import { EmailService } from 'src/email/email.service';
 import * as bcrypt from 'bcrypt';
 import * as crypto from 'crypto';
@@ -9,11 +9,11 @@ import { throwException } from 'src/responseStatus/auth.response';
 @Injectable()
 export class UsersService {
   constructor(
-    @InjectModel('user') private readonly userModel: Model<userSchema>,
+    @InjectModel(user.name) private readonly userModel: Model<user>,
     private readonly EmailService: EmailService,
   ) {}
 
-  async deleteUser(user: userSchema) {
+  async deleteUser(user: user) {
     const email = user.email;
     await this.userModel.findOneAndDelete({ email });
   }
@@ -24,7 +24,6 @@ export class UsersService {
       email,
     });
     await newUser.save();
-    await this.EmailService.sendVerificationCode(email);
     return newUser;
   }
   async getUser(email: string) {

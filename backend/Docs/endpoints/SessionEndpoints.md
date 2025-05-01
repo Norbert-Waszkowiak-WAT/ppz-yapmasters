@@ -1,6 +1,6 @@
 ## Get all Sessions Endpoint
    User must be logged in to use this endpoint
-    URL: user/getallsessions
+    URL: sesssions/getallsessions
     Method: get
     Request Body: none
     Response:
@@ -32,7 +32,7 @@ request:
 response:
 ```json 
 {
-	"statusCode": 404,
+	"statusCode": 200,
 	"responseCode": 702
 }
 ``` 
@@ -65,7 +65,7 @@ request:
 response:
 ```json 
 {
-	"statusCode": 404,
+	"statusCode": 200,
 	"responseCode": 702
 }
 ``` 

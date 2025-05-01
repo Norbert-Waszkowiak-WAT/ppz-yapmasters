@@ -4,6 +4,7 @@ import * as session from 'express-session';
 import * as passport from 'passport';
 import Redis from 'ioredis';
 import { RedisStore } from 'connect-redis';
+import { CustomValidationPipe } from './responseStatus/pipeline/calendar.custompipeline.response';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -21,6 +22,7 @@ async function bootstrap() {
       cookie: { secure: false }, // Set secure: true in production with HTTPS
     }),
   );
+  app.useGlobalPipes(CustomValidationPipe);
 
   // Initialize Passport
   await app.use(passport.initialize());

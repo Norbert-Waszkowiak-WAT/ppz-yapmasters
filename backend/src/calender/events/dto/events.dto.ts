@@ -1,4 +1,12 @@
-import { IsNotEmpty, IsOptional, IsDate, IsString } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  IsBoolean,
+  IsNumber,
+  IsArray,
+  ValidateIf,
+} from 'class-validator';
 import { Type } from 'class-transformer';
 
 export class CreateEventDto {
@@ -14,16 +22,43 @@ export class CreateEventDto {
   @IsString()
   description?: string;
 
+  @ValidateIf((o) => o.isOneTimeEvent)
   @IsNotEmpty()
-  @Type(() => Date)
-  startDate: Date;
+  @IsString()
+  RRule?: string;
 
   @IsNotEmpty()
-  @Type(() => Date)
-  endDate: Date;
+  @IsBoolean()
+  isOneTimeEvent: boolean;
 
-  // Replace recurring with rrule
+  @ValidateIf((o) => o.isOneTimeEvent)
+  @IsNotEmpty()
+  @IsString()
+  occurrenceDate?: string;
+
   @IsOptional()
-  @IsString() // Validate as a string (RRule format)
-  recurring?: string;
+  @IsNumber()
+  @Type(() => Number)
+  duration?: number;
+
+  @IsOptional()
+  @IsString()
+  location?: string;
+
+  @IsOptional()
+  @IsArray()
+  @IsString({ each: true })
+  participants?: string[];
+
+  @IsOptional()
+  @IsString()
+  colour?: string;
+
+  @IsNotEmpty()
+  @IsString()
+  timeZone: string;
+
+  @IsNotEmpty()
+  @IsString()
+  startTime: string;
 }

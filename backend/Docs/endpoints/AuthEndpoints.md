@@ -29,17 +29,17 @@
 Example Responses:
 ```json
 {
-  "statusCode": 202,
+  "statusCode": 200,
 	"responseCode": 615,
-	"userName": "negro",
-	"userEmail": "alexanderdawi1@hotmail.com"
+	"username": "negro",
+	"email": "alexanderdawi1@hotmail.com"
 }
 ```
 will return this json if the email is already in use
 ```json
 {
 {
-	"statusCode": 409,
+	"statusCode": 200,
 	"responseCode": 608
 }
 }
@@ -47,7 +47,7 @@ will return this json if the email is already in use
 if username is already in use
 ```json
 {
-	"statusCode": 409,
+	"statusCode": 200,
 	"responseCode": 607
 }
 ```
@@ -59,7 +59,7 @@ if username is already in use
   - `email`: string (required)
   - `password`: string (required)
 - Response:
-  - `user`: object (contains the authenticated user data)
+  - `username`: object (contains the authenticated user data)
   - `token`: string (contains the authentication token)
 
 Example Request:
@@ -76,7 +76,7 @@ Example Response:
 {
 	"statusCode": 200,
 	"responseCode": 609,
-	"User": "negro",
+	"username": "negro",
   "email": "johnDoe@negro300.com",
 	"sessionId": "pqfb9Fg8tiNfbI7VNrX5zFhTE0XtWaJd"
 }
@@ -84,21 +84,21 @@ Example Response:
 will return this json if the email is not verfied
 ``` json
 {
-	"statusCode": 422,
+	"statusCode": 200,
 	"responseCode": 601
 }
 ```
 and this json if email is not found
 ``` json
 {
-	"statusCode": 401,
+	"statusCode": 200,
 	"responseCode": 602
 }
 ```
 and this json if password incorrect
 ``` json
 {
-	"statusCode": 401,
+	"statusCode": 200,
 	"responseCode": 603
 }
 ```
@@ -130,25 +130,25 @@ response
 invalid code:
 ```json
 {
-	"statusCode": 401,
+	"statusCode": 200,
 	"responseCode": 604
 }
 ```
 Wrong password:
 ```json
 {
-	"statusCode": 401,
+	"statusCode": 200,
 	"responseCode": 603
 }
 ```
 Wrong email:
 ```json
 {
-	"statusCode": 404,
+	"statusCode": 200,
 	"responseCode": 610
 }
 ```
-## resend-verification-code Endpoint
+## send-verification-code Endpoint
 - URL: /users/resend-verification-code  
 - Method: POST  
 - Request Body: email
@@ -195,7 +195,7 @@ response
 or if incorrect email
 ``` json 
 {
-	"statusCode": 401,
+	"statusCode": 200,
 	"responseCode": 602
 }
 ``` 
@@ -226,7 +226,7 @@ response
 if token invalid or expired
 ``` json 
 {
-	"statusCode": 401,
+	"statusCode": 200,
 	"responseCode": 613
 }
 ```
@@ -257,14 +257,14 @@ response
 if password is incorrect
 ``` json 
 {
-	"statusCode": 401,
+	"statusCode": 200,
 	"responseCode": 603
 }
 ``` 
 if email is incorrect:
 ```json
 {
-	"statusCode": 404,
+	"statusCode": 200,
 	"responseCode": 610
 }
 ```

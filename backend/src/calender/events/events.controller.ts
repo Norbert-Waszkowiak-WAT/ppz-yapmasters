@@ -1,9 +1,7 @@
 import {
-  BadRequestException,
   Body,
   Controller,
   Get,
-  NotFoundException,
   Param,
   Patch,
   Post,
@@ -17,16 +15,18 @@ import { CreateEventDto } from './dto/events.dto';
 import { EventsService } from './events.service';
 import { UpdateEventDto } from './dto/update.event.dto';
 import { Types } from 'mongoose';
+import { throwEventsException } from 'src/responseStatus/calendar.events.response';
 @Controller('/calendar/events')
 export class EventsController {
   constructor(
-    @InjectModel('user') private readonly Events: Model<Event>,
+    @InjectModel(Event.name) private readonly Events: Model<Event>,
     private readonly EventService: EventsService,
   ) {}
   @Post('/add')
   @UseGuards(AuthenticatedGuard) // Ensure the user is authenticated
   async addEvent(@Body() addEventDto: CreateEventDto, @Req() req: any) {
     const userId = req.session.passport.user;
+    await this.EventService.validateReccuringRules(addEventDto);
     return this.EventService.createEvent(addEventDto, userId);
   }
 
@@ -38,17 +38,11 @@ export class EventsController {
     @Param('eventId') eventId: string,
   ) {
     if (!eventId || !Types.ObjectId.isValid(eventId)) {
-      throw new BadRequestException('Invalid event ID');
+      throwEventsException.InvalidEventId();
     }
-    try {
-      return this.EventService.updateEvent(eventId, updateEventDto);
-    } catch (error) {
-      if (error instanceof NotFoundException) {
-        throw new NotFoundException('Event not found');
-      }
-      throw error;
-    }
+    return this.EventService.updateEvent(eventId, updateEventDto);
   }
+
   @Get('/getEvents')
   @UseGuards(AuthenticatedGuard)
   async getAllOccurrences(
@@ -56,31 +50,28 @@ export class EventsController {
     @Req() req: any,
     @Body('endDate') endDate: string,
   ) {
-    if (!startDate || !endDate) {
-      throw new BadRequestException('Start date and end date are required');
-    }
+    let events = {};
     const userId = req.session.passport.user;
-    const occurrences = await this.EventService.getAllEventOccurrences(
+    const oneTimeEvents = await this.EventService.getOneTimeEvents(
       new Date(startDate),
       new Date(endDate),
       userId,
     );
-    return occurrences;
+    const recurringEvents = await this.EventService.getRecurringEvents(
+      new Date(startDate),
+      new Date(endDate),
+      userId,
+    );
+    events = { ...oneTimeEvents, ...recurringEvents };
+    return events;
   }
 
   @Get('/delete/:eventId')
   @UseGuards(AuthenticatedGuard)
   async deleteEvent(@Param('eventId') eventId: string) {
     if (!eventId || !Types.ObjectId.isValid(eventId)) {
-      throw new BadRequestException('Invalid event ID');
+      throwEventsException.InvalidEventId();
     }
-    try {
-      return this.EventService.deleteEvent(eventId);
-    } catch (error) {
-      if (error instanceof NotFoundException) {
-        throw new NotFoundException('Event not found');
-      }
-      throw error;
-    }
+    return this.EventService.deleteEvent(eventId);
   }
 }
