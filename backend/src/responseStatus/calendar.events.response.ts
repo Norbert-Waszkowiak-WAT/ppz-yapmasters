@@ -5,19 +5,19 @@ class ThrowEventExceptionClass {
     throw createCustomException(801, 200);
   }
   InvalidEventId() {
-    throw createCustomException(802, 400);
+    throw createCustomException(802, 200);
   }
   EventNotFound() {
-    throw createCustomException(803, 404);
+    throw createCustomException(803, 200);
   }
   EventCreatedSuccessfully() {
-    throw createCustomException(804, 201);
+    throw createCustomException(804, 200);
   }
   RRuleShouldNotExistIfOneTimeEventTrue() {
-    throw createCustomException(880, 400);
+    throw createCustomException(880, 200);
   }
   OccuranceDateShouldNotExistIfOneTimeEventFalse() {
-    throw createCustomException(881, 400);
+    throw createCustomException(881, 200);
   }
 }
 

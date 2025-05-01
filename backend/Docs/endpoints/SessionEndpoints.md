@@ -32,7 +32,7 @@ request:
 response:
 ```json 
 {
-	"statusCode": 404,
+	"statusCode": 200,
 	"responseCode": 702
 }
 ``` 
@@ -65,7 +65,7 @@ request:
 response:
 ```json 
 {
-	"statusCode": 404,
+	"statusCode": 200,
 	"responseCode": 702
 }
 ``` 

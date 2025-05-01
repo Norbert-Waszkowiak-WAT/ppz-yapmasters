@@ -95,7 +95,7 @@ Response:
 {
 	"message": "Invalid event ID",
 	"error": "Bad Request",
-	"statusCode": 400
+	"statusCode": 200
 }
 ```
 Incorrect information format will be checked with DTO's and nestjs ValidationPipe.
@@ -112,6 +112,6 @@ Response:
 		"recurring.frequency must be one of the following values: daily, weekly, monthly, yearly"
 	],
 	"error": "Bad Request",
-	"statusCode": 400
+	"statusCode": 200
 }
 ```

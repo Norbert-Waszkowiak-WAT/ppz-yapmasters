@@ -6,7 +6,7 @@ class ThrowAuthExceptionClass {
   }
 
   SessionNotFound(): never {
-    throw createCustomException(702, 401);
+    throw createCustomException(702, 200);
   }
 
   AllSessionsDestroyedSuccessfully() {

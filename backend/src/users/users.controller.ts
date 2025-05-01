@@ -61,7 +61,7 @@ export class UsersController {
     }
 
     const data = {
-      User: user.username,
+      username: user.username,
       email: user.email,
       sessionId: sessionId,
     };
