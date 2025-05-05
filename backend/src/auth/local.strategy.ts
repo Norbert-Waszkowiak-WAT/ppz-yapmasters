@@ -17,15 +17,15 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
     if (!user) {
       throwException.IncorrectEmail();
     }
-    if (user.isEmailverified == false) {
-      throwException.EmailNeedsVerification();
-    }
     const userCredentials = await this.authService.validateUser(
       email,
       password,
     );
     if (!userCredentials) {
       throwException.IncorrectPassword();
+    }
+    if (user.isEmailverified == false) {
+      throwException.EmailNeedsVerification();
     }
     return userCredentials;
   }
